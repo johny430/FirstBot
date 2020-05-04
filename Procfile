@@ -1,1 +1,1 @@
-worker: python main.py bot.py
+web: bundle exec rails server -p bot.py
