@@ -581,13 +581,13 @@ def Nazvanietvr(message):
         bot.register_next_step_handler(msg7, colvotovara)
 def colvotovara(message):
     global l
-    l = int(message.text)
     if message.text == '⏪ Назад':
         bot.send_message(message.chat.id, 'Меню администратора', reply_markup=markupadmin)
     elif not message.text.isdigit():
         msg7 = bot.send_message(message.chat.id, 'Укажите количество:', reply_markup=markupadminnazad)
         bot.register_next_step_handler(msg7, colvotovara)
     else:
+        l = int(message.text)
         msg7 = bot.send_message(message.chat.id, 'Укажите цену за штуку:', reply_markup=markupadminnazad)
         bot.register_next_step_handler(msg7, cenatovara)
 def cenatovara(message):
@@ -664,7 +664,7 @@ def dobavits(message):
 def dobavitsoder(message):
     global b, h
     b = str(message.text)
-    if message.text == '? Назад':
+    if message.text == '⏪ Назад':
         bot.send_message(message.chat.id, 'Меню администратора', reply_markup=markupadmin)
     else:
         conn = sqlite3.connect('Spisokproductov.db')
@@ -681,7 +681,7 @@ def dobavitsoder(message):
             bot.register_next_step_handler(msg2, ssilkeadds)
 def ssilkeadds(message):
     global o
-    if message.text == '? Назад':
+    if message.text == '⏪ Назад':
         msg = bot.send_message(message.chat.id, 'Укажите название товара:')
         bot.register_next_step_handler(msg, dobavitsoder)
     elif not message.text.isdigit():
@@ -692,7 +692,7 @@ def ssilkeadds(message):
         msg2 = bot.send_message(message.chat.id, 'Укажите добавляеме ссылки(через пробел):',reply_markup=markupadminnazad)
         bot.register_next_step_handler(msg2, ssilkeadd)
 def ssilkeadd(message):
-    if message.text == '? Назад':
+    if message.text == '⏪ Назад':
         msg = bot.send_message(message.chat.id, 'Укажите название товара:')
         bot.register_next_step_handler(msg, dobavitsoder)
     else:
@@ -704,7 +704,7 @@ def ssilkeadd(message):
         c.execute('SELECT * FROM Vsetovari2 WHERE Nazvanie=?', t)
         h = c.fetchone()
         v = h[4]
-        n = v + m
+        n = v +'\n'+ m
         sql = """
         UPDATE Vsetovari2 
         SET link = ? 
@@ -1101,7 +1101,7 @@ def ochistka(message):
             t = (t,)
             c.execute('SELECT * FROM Vsetovari2 WHERE nazvanie=?', t)
             e = c.fetchone()
-            p = e[4] + d[i][5]
+            p = e[4] +'\n'+ d[i][5]
             sql = """
             UPDATE Vsetovari2
             SET link = ? 
@@ -1336,7 +1336,7 @@ def potchi(message):
             t = (t,)
             c.execute('SELECT * FROM Polzovatelakorzina WHERE nazvanie=?', t)
             e = c.fetchone()
-            p = e[5] + u
+            p = e[5] +'\n'+ u
             sql = """
             UPDATE Polzovatelakorzina
             SET link = ? 
